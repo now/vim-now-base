@@ -1,11 +1,14 @@
 " Vim plugin file
 " Maintainer:	    Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2006-06-11
+" Latest Revision:  2006-06-16
 
 if exists('loaded_lib_now_vim_motion')
   finish
 endif
 let loaded_lib_now_vim_motion = 1
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 let NOW.Vim.Motion = {}
 
@@ -37,3 +40,5 @@ function NOW.Vim.Motion.iterate_lines(matching, pattern, ...) dict
   endwhile
   return lnum
 endfunction
+
+let &cpo = s:cpo_save

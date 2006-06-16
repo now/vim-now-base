@@ -1,11 +1,14 @@
 " Vim plugin file
 " Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2006-06-12
+" Latest Revision:  2006-06-16
 
 if exists('loaded_lib_now_system_user')
   finish
 endif
 let loaded_lib_now_system_user = 1
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 let NOW.System.User = {}
 
@@ -90,3 +93,5 @@ endfunction
 function NOW.System.User.uid() dict
   return $UID
 endfunction
+
+let &cpo = s:cpo_save

@@ -1,11 +1,14 @@
 " Vim library file
 " Maintainer:	    Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2006-06-11
+" Latest Revision:  2006-06-16
 
 if exists('loaded_lib_now_file')
   finish
 endif
 let loaded_lib_now_file = 1
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 let NOW.File = {}
 
@@ -23,3 +26,5 @@ function NOW.File.join(...) dict
   endfor
   return name
 endfunction
+
+let &cpo = s:cpo_save

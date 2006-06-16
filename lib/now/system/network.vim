@@ -1,11 +1,14 @@
 " Vim plugin file
 " Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2006-06-12
+" Latest Revision:  2006-06-16
 
 if exists('loaded_lib_now_system_network')
   finish
 endif
 let loaded_lib_now_system_network = 1
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 let NOW.System.Network = {}
 
@@ -22,3 +25,5 @@ function NOW.System.Network.hostname() dict
   
   return hostname
 endfunction
+
+let &cpo = s:cpo_save

@@ -1,11 +1,14 @@
 " Vim plugin file
 " Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2006-06-12
+" Latest Revision:  2006-06-16
 
 if exists('loaded_lib_now_system_passwd')
   finish
 endif
 let loaded_lib_now_system_passwd = 1
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 let NOW.System.Passwd = {}
 
@@ -53,3 +56,5 @@ function NOW.System.Passwd.Entry.new(account, passwd, uid, gid, gecos,
   let entry.shell = a:shell
   return entry
 endfunction
+
+let &cpo = s:cpo_save
