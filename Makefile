@@ -23,12 +23,14 @@ doc_FILES =
 lib_FILES = \
 	    lib/now.vim \
 	    lib/now/file.vim \
+	    lib/now/mbc.vim \
 	    lib/now/system.vim \
 	    lib/now/system/network.vim \
 	    lib/now/system/passwd.vim \
 	    lib/now/system/user.vim \
 	    lib/now/vim.vim \
-	    lib/now/vim/motion.vim
+	    lib/now/vim/motion.vim \
+	    lib/now/vim/position.vim
 
 plugin_FILES = 
 
