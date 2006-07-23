@@ -16,6 +16,11 @@ function NOW.MBC.len(str)
   return strlen(substitute(a:str, '.', 'c', 'g'))
 endfunction
 
+" TODO: This is of course not strictly true, but it’s good enough for a start.
+function NOW.MBC.width(str) dict
+  return self.len(a:str)
+endfunction
+
 function NOW.MBC.part(str, start, ...)
   return join(split(a:str, '\zs')[(a:start):(a:0 > 0 ? a:1 : -1)], "")
 endfunction
