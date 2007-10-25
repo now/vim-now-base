@@ -13,24 +13,32 @@ ifeq ($(uname_O),Cygwin)
 endif
 
 DIRS = \
-       lib \
-       lib/now \
-       lib/now/system \
-       lib/now/vim
+       autoload \
+       autoload/now \
+       autoload/now/system \
+       autoload/now/utilities \
+       autoload/now/vim
 
 doc_FILES =
 
 lib_FILES = \
-	    lib/now.vim \
-	    lib/now/file.vim \
-	    lib/now/mbc.vim \
-	    lib/now/system.vim \
-	    lib/now/system/network.vim \
-	    lib/now/system/passwd.vim \
-	    lib/now/system/user.vim \
-	    lib/now/vim.vim \
-	    lib/now/vim/motion.vim \
-	    lib/now/vim/position.vim
+	    autoload/now/file.vim \
+	    autoload/now/mbc.vim \
+	    autoload/now/regex.vim \
+	    autoload/now/system/network.vim \
+	    autoload/now/system/passwd.vim \
+	    autoload/now/system/user.vim \
+	    autoload/now/utilities/list.vim \
+	    autoload/now/vim.vim \
+	    autoload/now/vim/buffer.vim \
+	    autoload/now/vim/buffers.vim \
+	    autoload/now/vim/mark.vim \
+	    autoload/now/vim/motion.vim \
+	    autoload/now/vim/point.vim \
+	    autoload/now/vim/range.vim \
+	    autoload/now/vim/settings.vim \
+	    autoload/now/vim/window.vim \
+	    autoload/now/vim/windows.vim
 
 plugin_FILES = 
 
