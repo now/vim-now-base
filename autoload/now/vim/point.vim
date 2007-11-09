@@ -7,12 +7,20 @@ set cpo&vim
 
 function now#vim#point#new(where)
   let point = deepcopy(g:now#vim#point#object)
-  call point.set(getpos(a:where))
+  call point.set(a:where)
   return point
 endfunction
 
 function now#vim#point#cursor()
-  return now#vim#point#new('.')
+  return now#vim#point#new(getpos('.'))
+endfunction
+
+function now#vim#point#first()
+  return now#vim#point#new([0, 1, 1, 0])
+endfunction
+
+function now#vim#point#last()
+  return now#vim#point#new([0, line('$'), col(line('$'), '$'), 0])
 endfunction
 
 let now#vim#point#object = {}
