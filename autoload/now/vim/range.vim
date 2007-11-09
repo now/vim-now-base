@@ -1,18 +1,14 @@
 " Vim plugin file
 " Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2007-09-16
+" Latest Revision:  2007-11-09
 
 let s:cpo_save = &cpo
 set cpo&vim
 
-function now#vim#range#new(...)
+function now#vim#range#new(begin, ...)
   let range = deepcopy(g:now#vim#range#object)
-  if a:0 > 0
-    let range.begin = a:000[0]
-    if a:0 > 1
-      let range.end = a:000[1]
-    endif
-  endif
+  let range.begin = a:begin
+  let range.end = a:0 > 0 ? a:000[0] : range.begin
   return range
 endfunction
 
