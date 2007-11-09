@@ -11,7 +11,7 @@ function now#vim#point#new(where)
   return point
 endfunction
 
-function now#vim#point#current()
+function now#vim#point#cursor()
   return now#vim#point#new('.')
 endfunction
 
