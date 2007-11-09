@@ -1,12 +1,12 @@
 " Vim plugin file
 " Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2007-09-16
+" Latest Revision:  2007-11-09
 
 let s:cpo_save = &cpo
 set cpo&vim
 
 function now#vim#point#new(where)
-  let buffer = deepcopy(g:now#vim#point#object)
+  let point = deepcopy(g:now#vim#point#object)
   call point.set(getpos(a:where))
   return point
 endfunction
