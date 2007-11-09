@@ -12,6 +12,14 @@ function now#vim#range#new(begin, ...)
   return range
 endfunction
 
+function now#vim#range#cursor()
+  return now#vim#range#new(now#vim#point#cursor())
+endfunction
+
+function now#vim#range#all()
+  return now#vim#range#new(now#vim#point#first(), now#vim#point#last())
+endfunction
+
 let now#vim#range#object = {}
 
 function now#vim#range#object.delete() dict
