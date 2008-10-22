@@ -1,28 +1,24 @@
-" Vim plugin file
-" Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2007-11-09
-
 let s:cpo_save = &cpo
 set cpo&vim
 
-function now#vim#range#new(begin, ...)
+function! now#vim#range#new(begin, ...)
   let range = deepcopy(g:now#vim#range#object)
   let range.begin = a:begin
   let range.end = a:0 > 0 ? a:000[0] : range.begin
   return range
 endfunction
 
-function now#vim#range#cursor()
+function! now#vim#range#cursor()
   return now#vim#range#new(now#vim#point#cursor())
 endfunction
 
-function now#vim#range#all()
+function! now#vim#range#all()
   return now#vim#range#new(now#vim#point#first(), now#vim#point#last())
 endfunction
 
 let now#vim#range#object = {}
 
-function now#vim#range#object.delete() dict
+function! now#vim#range#object.delete() dict
   if self.end.line != self.begin.line
     call self.begin.goto()
     normal! "_d$
@@ -40,7 +36,7 @@ function now#vim#range#object.delete() dict
   call self.begin.goto()
 endfunction
 
-function now#vim#range#object.insert(text) dict
+function! now#vim#range#object.insert(text) dict
   let lines = split(a:text, '\n')
   let line = remove(lines, 0)
   let old_line = getline(self.begin.line)
@@ -66,9 +62,10 @@ function now#vim#range#object.insert(text) dict
   call self.end.goto()
 endfunction
 
-function now#vim#range#object.replace(replacement) dict
+function! now#vim#range#object.replace(replacement) dict
   call self.delete()
   call self.insert(a:replacement)
 endfunction
 
 let &cpo = s:cpo_save
+unlet s:cpo_save

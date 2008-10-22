@@ -1,11 +1,8 @@
-" Vim plugin file
-" Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2007-09-19
-
 let s:cpo_save = &cpo
 set cpo&vim
 
-augroup now-vim-buffers-mru
+augroup now-base-vim-buffers-mru
+  autocmd!
   autocmd BufAdd    * silent call g:now#vim#buffers#list.push()
   autocmd BufDelete * silent call g:now#vim#buffers#list.pop()
 
@@ -17,7 +14,7 @@ augroup end
 
 let now#vim#buffers#list = {}
 
-function now#vim#buffers#list.build() dict
+function! now#vim#buffers#list.build() dict
   let self.list = []
   let i = 0
   while i < bufnr('$')
@@ -29,22 +26,22 @@ function now#vim#buffers#list.build() dict
   endwhile
 endfunction
 
-function now#vim#buffers#list.push() dict
+function! now#vim#buffers#list.push() dict
   call add(self.list, now#vim#buffer#new(str2nr(expand('<abuf>'))))
 endfunction
 
-function now#vim#buffers#list.pop() dict
+function! now#vim#buffers#list.pop() dict
   call self.remove(str2nr(expand('<abuf>')))
 endfunction
 
-function now#vim#buffers#list.remove(buffer) dict
+function! now#vim#buffers#list.remove(buffer) dict
   let index = self.index(a:buffer)
   if index != -1
     call remove(self.list, index)
   endif
 endfunction
 
-function now#vim#buffers#list.index(number) dict
+function! now#vim#buffers#list.index(number) dict
   let index = 0
   for buffer in self.list
     if buffer.number == a:number 
@@ -55,11 +52,11 @@ function now#vim#buffers#list.index(number) dict
   return -1
 endfunction
 
-function now#vim#buffers#list.count() dict
+function! now#vim#buffers#list.count() dict
   return len(self.list)
 endfunction
 
-function now#vim#buffers#list.item(index) dict
+function! now#vim#buffers#list.item(index) dict
   return self.list[a:index]
 endfunction
 
@@ -74,7 +71,7 @@ function! now#vim#buffers#mru.push() dict
   call insert(self.list, buffer, 0)
 endfunction
 
-function now#vim#buffers#to_a(...)
+function! now#vim#buffers#to_a(...)
   let order = a:0 > 0 ? a:1 : 'creation'
   let filter = a:0 > 1 ? a:2 : 'all'
 
@@ -95,23 +92,23 @@ function now#vim#buffers#to_a(...)
   endif
 endfunction
 
-function now#vim#buffers#count()
+function! now#vim#buffers#count()
   return g:now#vim#buffers#list.count()
 endfunction
 
-function now#vim#buffers#item(index)
+function! now#vim#buffers#item(index)
   return g:now#vim#buffers#list.item(a:index)
 endfunction
 
-function now#vim#buffers#find(id)
+function! now#vim#buffers#find(id)
   return now#vim#buffers#item(g:now#vim#buffers#list.index(bufnr(a:id)))
 endfunction
 
-function now#vim#buffers#current()
+function! now#vim#buffers#current()
   return now#vim#buffers#find('%')
 endfunction
 
-function now#vim#buffers#alternate()
+function! now#vim#buffers#alternate()
   return now#vim#buffers#find(0)
 endfunction
 
@@ -122,3 +119,4 @@ call now#vim#buffers#mru.build()
 " function NOW.Vim.Buffers.open()
 
 let &cpo = s:cpo_save
+unlet s:cpo_save

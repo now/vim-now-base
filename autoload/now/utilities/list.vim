@@ -1,11 +1,7 @@
-" Vim autoload file
-" Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2007-06-26
-
 let s:cpo_save = &cpo
 set cpo&vim
 
-function now#utilities#list#permute(list)
+function! now#utilities#list#permute(list)
   if len(a:list) < 2
     return [a:list]
   else
@@ -26,3 +22,4 @@ function now#utilities#list#permute(list)
 endfunction
 
 let &cpo = s:cpo_save
+unlet s:cpo_save

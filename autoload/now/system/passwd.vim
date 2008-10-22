@@ -1,7 +1,3 @@
-" Vim plugin file
-" Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2006-11-07
-
 let s:cpo_save = &cpo
 set cpo&vim
 
@@ -19,9 +15,9 @@ let s:cache_time = -1
 " Lookup up the passwd(5) entry in the passwd(5) file for the given user id ID.
 " If ID is a number, look up the numeric user-id, otherwise, look it up as a
 " login name.
-function now#system#passwd#entry(id)
+function! now#system#passwd#entry(id)
   call s:parse()
-  return type(a:id) == now#vim#types.number ?
+  return type(a:id) == g:now#vim#types.number ?
         \ s:cache.uids[a:id] :
         \ s:cache.logins[a:id]
 endfunction
@@ -29,42 +25,45 @@ endfunction
 " Parse the passwd(5) file.  If it isn’t readable or if it hasn’t been updated
 " since we last parsed it, simply return.  Otherwise walk through the file line
 " by line, adding entries to the cache.
-function s:parse()
-  if !filereadable(now#system#passwd#file) ||
-   \ getftime(now#system#passwd#file) == s:cache_time
+function! s:parse()
+  if !filereadable(g:now#system#passwd#file) ||
+   \ getftime(g:now#system#passwd#file) == s:cache_time
     return
   endif
-  for line in readfile(now#system#passwd#file)
+  for line in readfile(g:now#system#passwd#file)
     let entry = s:parse_line(line)
     let s:cache.logins[entry.name] = entry
     let s:cache.uids[entry.uid] = entry
   endfor
-  let s:cache_time = getftime(now#system#passwd#file)
+  let s:cache_time = getftime(g:now#system#passwd#file)
 endfunction
 
 " Parse a single line in the passwd(5) file.  This is done by splitting the
 " line on colons: ‘:’.
-function s:parse_line(line)
+function! s:parse_line(line)
   let parts = split(a:line, ':')
-  let remaining = remove(parts, 8, -1)
-  let parts[6] .= join(remaining, ':')
-  let entry = call(s:entry.new, parts, s:entry)
+  if len(parts) > 7
+    let remaining = remove(parts, 8, -1)
+    let parts[6] .= join(remaining, ':')
+  endif
+  return call(s:entry.new, parts, s:entry)
 endfunction
 
 " Represents a single entry in the passwd(5) file.
 let s:entry = {}
 
 " Create a new passwd(5) entry.
-function s:entry.new(account, passwd, uid, gid, gecos, directory, shell) dict
+function! s:entry.new(name, passwd, uid, gid, gecos, dir, shell) dict
   let entry = deepcopy(self)
-  let entry.account = a:account
+  let entry.name = a:name
   let entry.passwd = a:passwd
-  let entry.uid = a:uid
-  let entry.gid = a:gid
+  let entry.uid = str2nr(a:uid)
+  let entry.gid = str2nr(a:gid)
   let entry.gecos = a:gecos
-  let entry.directory = a:directory
+  let entry.dir = a:dir
   let entry.shell = a:shell
   return entry
 endfunction
 
 let &cpo = s:cpo_save
+unlet s:cpo_save

@@ -1,11 +1,7 @@
-" Vim plugin file
-" Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2007-09-16
-
 let s:cpo_save = &cpo
 set cpo&vim
 
-function now#system#user#email_address()
+function! now#system#user#email_address()
   if $EMAIL != ""
     return $EMAIL
   elseif $EMAIL_ADDRESS != ""
@@ -22,8 +18,9 @@ function now#system#user#email_address()
   return email
 endfunction
 
-function now#system#user#full_name()
+function! now#system#user#full_name(...)
   let uid = a:0 > 0 ? a:1 : now#system#user#effective_uid()
+    let entry = now#system#passwd#entry(uid)
   try
     let entry = now#system#passwd#entry(uid)
   catch
@@ -39,13 +36,13 @@ function now#system#user#full_name()
       return login
     endif
     return toupper(login[0]) . strpart(login, 1)
-  end
+  endtry
 
   let name = entry.gecos
 
   " Only keep stuff before the first comma.
-  let end = stridx(name, ',')
-  if end != -1
+  let comma = stridx(name, ',')
+  if comma != -1
     let name = strpart(name, 0, comma)
   endif
 
@@ -59,7 +56,7 @@ function now#system#user#full_name()
   return name
 endfunction
 
-function now#system#user#login_name(...)
+function! now#system#user#login_name(...)
   if $LOGNAME != ""
     return $LOGNAME
   elseif $USER != ""
@@ -75,16 +72,17 @@ function now#system#user#login_name(...)
   endtry
 endfunction
 
-function now#system#user#real_login_name()
+function! now#system#user#real_login_name()
   return now#system#user#login_name(now#system#user#uid())
 endfunction
 
-function now#system#user#effective_uid()
-  return $EUID
+function! now#system#user#effective_uid()
+  return str2nr(now#string#strip(system("id -u")))
 endfunction
 
-function now#system#user#uid()
-  return $UID
+function! now#system#user#uid()
+  return str2nr(now#string#strip(system("id -ur")))
 endfunction
 
 let &cpo = s:cpo_save
+unlet s:cpo_save

@@ -4,6 +4,7 @@
 
 FILES = \
 	autoload/now/file.vim \
+	autoload/now/list.vim \
 	autoload/now/mbc.vim \
 	autoload/now/regex.vim \
 	autoload/now/string.vim \

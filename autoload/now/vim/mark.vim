@@ -1,11 +1,7 @@
-" Vim plugin file
-" Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2007-09-26
-
 let s:cpo_save = &cpo
 set cpo&vim
 
-function now#vim#mark#new(where)
+function! now#vim#mark#new(where)
   let mark = deepcopy(g:now#vim#mark#object)
   let [mark.buffer, mark.line, mark.column, mark.offset] =
         \ getpos(a:where)
@@ -13,13 +9,13 @@ function now#vim#mark#new(where)
   return mark
 endfunction
 
-function now#vim#mark#cursor()
+function! now#vim#mark#cursor()
   return now#vim#mark#new('.')
 endfunction
 
 let now#vim#mark#object = {}
 
-function now#vim#mark#object.restore() dict
+function! now#vim#mark#object.restore() dict
   execute self.buffer . 'wincmd w'
   call cursor(self.line - self.winline + 1, 1)
   normal! zt
@@ -27,3 +23,4 @@ function now#vim#mark#object.restore() dict
 endfunction
 
 let &cpo = s:cpo_save
+unlet s:cpo_save

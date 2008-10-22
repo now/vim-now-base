@@ -1,11 +1,7 @@
-" Vim autoload file
-" Maintainer:       Nikolai Weibull <now@bitwi.se>
-" Latest Revision:  2007-09-19
-
 let s:cpo_save = &cpo
 set cpo&vim
 
-function now#vim#settings#fillchar(char, ...)
+function! now#vim#settings#fillchar(char, ...)
   let default = ""
   if a:0 > 1
     let default = a:1
@@ -14,5 +10,5 @@ function now#vim#settings#fillchar(char, ...)
   return (fillchar != "" ? fillchar : default)
 endfunction
 
-let s:cpo_save = &cpo
-set cpo&vim
+let &cpo = s:cpo_save
+unlet s:cpo_save
