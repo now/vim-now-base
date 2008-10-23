@@ -66,7 +66,7 @@ function! now#system#user#login_name(...)
   let uid = a:0 > 0 ? a:1 : now#system#user#effective_uid()
   try
     let entry = now#system#passwd#entry(uid)
-    return entry.account
+    return entry.name
   catch
     return ""
   endtry

@@ -41,10 +41,16 @@ endfunction
 " Parse a single line in the passwd(5) file.  This is done by splitting the
 " line on colons: ‘:’.
 function! s:parse_line(line)
+  let empty_fields = ["", "", "", "", "", "", ""]
   let parts = split(a:line, ':')
   if len(parts) > 7
-    let remaining = remove(parts, 8, -1)
+    let remaining = remove(parts, 7, -1)
     let parts[6] .= join(remaining, ':')
+  elseif len(parts) < 7
+    call extend(parts, empty_fields)
+    if len(parts) > 7
+      call remove(parts, 7, -1)
+    endif
   endif
   return call(s:entry.new, parts, s:entry)
 endfunction
