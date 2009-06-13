@@ -20,7 +20,6 @@ endfunction
 
 function! now#system#user#full_name(...)
   let uid = a:0 > 0 ? a:1 : now#system#user#effective_uid()
-    let entry = now#system#passwd#entry(uid)
   try
     let entry = now#system#passwd#entry(uid)
   catch
